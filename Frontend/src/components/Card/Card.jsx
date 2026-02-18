@@ -13,8 +13,17 @@ const Cart = () => {
     setPopularCourses(courses ? courses.filter((course) => course.isPublished) : []);
   }, [courses]);
 
-  const handlePopularCardClick = () => {
-    navigate(userData ? "/view-courses" : "/login");
+  const handlePopularCardClick = (courseId) => {
+    if (!userData) {
+      navigate("/login");
+      return;
+    }
+
+    if (!courseId) {
+      return;
+    }
+
+    navigate(`/view-courses/${courseId}`);
   };
 
   return (
@@ -34,7 +43,11 @@ const Cart = () => {
 
         <div className="popularGrid">
           {popularCourses.map((each) => (
-            <div className="courseCard" key={each._id} onClick={handlePopularCardClick}>
+            <div
+              className="courseCard"
+              key={each._id}
+              onClick={() => handlePopularCardClick(each._id)}
+            >
               <div className="courseThumbWrap">
                 <img src={each.thumnail} alt={each.title} className="courseThumb" />
               </div>

@@ -61,7 +61,10 @@ const Allcourses = () => {
     };
 
     const handleViewCourse = (course) => {
-        navigate("/view-courses", { state: { course } });
+        if (!course?._id) {
+            return;
+        }
+        navigate(`/view-courses/${course._id}`);
     };
 
     return (

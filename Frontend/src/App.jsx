@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useSelector } from "react-redux";
 import useGetCurrentUser from "./components/customHooks/getCurrentUser.js";
+import useGetPublishedCourses from "./components/customHooks/getPublishedCourses.js";
 import Forget from "./components/ForgetPassword/Forget.jsx";
 import EditProfile from "./components/Edit/EditProfile.jsx";
 import ExploreCouses from "./components/ExploreCouses/ExploreCouses.jsx";
@@ -26,6 +27,7 @@ import ViewCourses from "./components/ViewCourses/ViewCourses.jsx";
 const App = () => {
   useGetCurrentUser();
   useGetCreatorCourse();
+  useGetPublishedCourses();
   const { userData, isUserLoading } = useSelector((state) => state.user);
 
   if (isUserLoading) {
@@ -98,7 +100,7 @@ const App = () => {
           element={userData ? <Allcourses /> : <Navigate to="/login" />}
         />
         <Route
-          path="/view-courses"
+          path="/view-courses/:courseId"
           element={userData ? <ViewCourses /> : <Navigate to="/login" />}
         />
         {/* crear lecture */}
