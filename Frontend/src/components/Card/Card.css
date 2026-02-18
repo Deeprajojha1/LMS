@@ -1,0 +1,250 @@
+/* =========================
+   Popular Courses Section (PRO)
+========================= */
+
+.popularPage {
+  width: 100%;
+  padding: 70px 16px;
+  background: linear-gradient(180deg, #5b657d 0%, #e6e7eb 100%);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+}
+
+.popularContainer {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* =========================
+   Header
+========================= */
+
+.popularHeader {
+  text-align: center;
+  margin-bottom: 46px;
+}
+
+.popularTitle {
+  font-size: clamp(1.7rem, 2.6vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+
+.popularSubtitle {
+  max-width: 860px;
+  margin: 0 auto;
+  font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* =========================
+   Grid
+========================= */
+
+.popularGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* =========================
+   Card
+========================= */
+
+.courseCard {
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(107, 71, 71, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, border 0.25s ease, background 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.courseCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top left,
+    rgba(87, 106, 111, 0.14),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.courseCard:hover::before {
+  opacity: 1;
+}
+
+.courseCard:hover {
+  transform: translateY(-9px);
+  border: 1px solid rgba(92, 220, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* =========================
+   Thumbnail
+========================= */
+
+.courseThumbWrap {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: rgba(124, 86, 86, 0.03);
+}
+
+.courseThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 0.35s ease;
+}
+
+.courseCard:hover .courseThumb {
+  transform: scale(1.08);
+}
+
+/* =========================
+   Card Body
+========================= */
+
+.courseBody {
+  padding: 16px;
+  position: relative;
+ background-color: #6e5454;
+  z-index: 1;
+}
+
+.courseMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.courseCategory,
+.courseLevel {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.courseCategory {
+  background: rgba(182, 198, 202, 0.14);
+  color: #5cdcff;
+  border: 1px solid rgba(92, 220, 255, 0.22);
+}
+
+.courseLevel {
+  background: rgba(147, 135, 117, 0.14);
+  color: #ffbc5c;
+  border: 1px solid rgba(255, 188, 92, 0.22);
+}
+
+.courseName {
+  font-size: 1.14rem;
+  font-weight: 900;
+  margin: 0 0 8px 0;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
+}
+
+.courseDesc {
+ font-size: 0.95rem;
+ line-height: 1.55;
+ color: rgba(255, 255, 255, 0.72);
+}
+
+/* =========================
+   Footer
+========================= */
+
+.courseFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.coursePrice {
+  font-size: 1.08rem;
+  font-weight: 900;
+  color: #f7f4f4;
+  letter-spacing: 0.2px;
+}
+
+/* =========================
+   Empty State
+========================= */
+
+.emptyText {
+  text-align: center;
+  margin-top: 28px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* =========================
+   Responsive Breakpoints
+========================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .popularGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .courseThumbWrap {
+    height: 185px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .popularPage {
+    padding: 56px 14px;
+  }
+
+  .popularHeader {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  .popularSubtitle {
+    margin: 0;
+  }
+
+  .popularGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .courseThumbWrap {
+    height: 175px;
+  }
+
+  .courseFooter {
+    justify-content: flex-start;
+  }
+}
+.content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}

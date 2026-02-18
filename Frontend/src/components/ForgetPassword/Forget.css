@@ -1,0 +1,227 @@
+/* Page Background */
+.forget-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+  background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+}
+
+/* Main Card */
+.forget-card {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0px 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Heading */
+.forget-heading {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.forget-desc {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 18px;
+}
+
+/* Steps */
+.forget-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.step-dot {
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #111827;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.step-dot.active {
+  background: #2563eb;
+  color: white;
+}
+
+.step-line {
+  height: 4px;
+  width: 60px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  margin: 0px 10px;
+}
+
+/* Step Box */
+.step-box {
+  padding-top: 10px;
+}
+
+.step-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+/* Form */
+.forget-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Input */
+.input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.forget-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.forget-input {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  font-size: 14px;
+}
+
+.forget-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0px 0px 0px 4px rgba(37, 99, 235, 0.18);
+}
+
+/* Buttons */
+.forget-btn {
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 15px;
+  background: #2563eb;
+  color: white;
+  transition: 0.2s ease;
+}
+
+.forget-btn:hover {
+  background: #1e4fd1;
+}
+
+.forget-btn.light {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.forget-btn.light:hover {
+  background: #e5e7eb;
+}
+
+/* Button row (step 2 & 3) */
+.btn-row {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-row .forget-btn {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .forget-card {
+    padding: 20px;
+  }
+
+  .step-line {
+    width: 40px;
+  }
+}
+.auth-switch {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280; /* gray */
+  font-weight: 500;
+}
+
+.auth-link-btn {
+  border: none;
+  background: transparent;
+  color: #2563eb; /* blue */
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+.auth-link-btn:hover {
+  background: rgba(37, 99, 235, 0.12);
+  text-decoration: underline;
+}
+
+.auth-link-btn:active {
+  transform: scale(0.96);
+}
+/*  timer text (start align) */
+.otp-text {
+  margin: 0;
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-align: left;     /* start */
+}
+
+/*  time highlight */
+.otp-time {
+  color: #2563eb;
+  font-weight: 800;
+}
+
+/* transparent resend button like link */
+.resend-link-btn {
+  margin-top: 6px;
+  background: transparent;   /*  transparent */
+  border: none;
+  padding: 0;                /* no extra space */
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: left;          /* start */
+}
+
+/* hover effect */
+.resend-link-btn:hover {
+  text-decoration: underline;
+}
+
+/* click effect */
+.resend-link-btn:active {
+  transform: scale(0.98);
+}

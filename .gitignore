@@ -1,0 +1,20 @@
+# Monorepo ignores
+Backend/node_modules/
+Frontend/node_modules/
+
+# Environment files
+.env
+.env.*
+Backend/.env
+Backend/.env.*
+Frontend/.env
+Frontend/.env.*
+
+# Allow sample env templates
+!Backend/.env.example
+!Frontend/.env.example
+!*.env.example
+
+# Uploaded/generated media
+Backend/public/*
+!Backend/public/.gitkeep

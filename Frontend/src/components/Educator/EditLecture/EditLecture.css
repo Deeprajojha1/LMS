@@ -1,0 +1,189 @@
+.editLecturePage {
+  min-height: calc(100vh - 72px);
+  padding: 40px 18px;
+  background: linear-gradient(150deg, #f7f8fc 0%, #eef3ff 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.editLectureCard {
+  width: 100%;
+  max-width: 760px;
+  background: #ffffff;
+  border: 1px solid #e3e8f5;
+  border-radius: 16px;
+  box-shadow: 0 14px 30px rgba(22, 35, 86, 0.08);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.editLectureBack {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #d6dcef;
+  background: #f8faff;
+  color: #1f2d4d;
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editLectureBack:hover {
+  background: #eef3ff;
+}
+
+.editLectureHeading {
+  margin: 4px 0 6px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1c2546;
+}
+
+.editLectureRemoveBtn {
+  width: fit-content;
+  border: 1px solid #f1c1c1;
+  background: #fff4f4;
+  color: #b72626;
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editLectureRemoveBtn:hover:not(:disabled) {
+  background: #ffe7e7;
+}
+
+.editLectureLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2b3558;
+  margin-top: 2px;
+}
+
+.editLectureInput,
+.editLectureFile {
+  width: 100%;
+  border: 1px solid #d5dcef;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+  color: #1f2d4d;
+  outline: none;
+}
+
+.editLectureFileRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #d5dcef;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #ffffff;
+}
+
+.editLectureChooseBtn {
+  border: 1px solid #3f60d8;
+  background: #eef3ff;
+  color: #223a8f;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.editLectureChooseBtn:hover {
+  background: #e2eaff;
+}
+
+.editLectureChooseBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.editLectureChosenName {
+  font-size: 13px;
+  color: #445178;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editLectureFileHidden {
+  display: none;
+}
+
+.editLectureInput:focus,
+.editLectureFile:focus {
+  border-color: #5373ff;
+  box-shadow: 0 0 0 4px rgba(83, 115, 255, 0.13);
+}
+
+.editLectureCheckboxRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #293457;
+  margin-top: 4px;
+}
+
+.editLectureCheckboxRow input {
+  width: 16px;
+  height: 16px;
+  accent-color: #4d67e8;
+}
+
+.editLectureUpdateBtn {
+  margin-top: 6px;
+  border: none;
+  background: linear-gradient(130deg, #415fd6 0%, #5373ff 100%);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  min-height: 46px;
+}
+
+.editLectureUpdateBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(65, 95, 214, 0.25);
+}
+
+.editLectureUpdateBtn:disabled,
+.editLectureRemoveBtn:disabled,
+.editLectureBack:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .editLecturePage {
+    padding: 20px 12px;
+  }
+
+  .editLectureCard {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+
+  .editLectureHeading {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,95 @@
+/* ==================================
+   LOGO / FEATURES BAR
+================================== */
+.logo {
+  width: 100%;
+  min-height: 130px;
+
+   background: linear-gradient(180deg,  #777c93 0%,#4d5568 100%);
+
+  /* All Flexbox Properties for Container */
+  display: flex;
+  flex-direction: row; /* Direction of flex items */
+  justify-content: space-around; /* Alignment along main axis */
+  align-items: center; /* Alignment along cross axis */
+  align-content: stretch; /* Alignment of flex lines (for multi-line) */
+  flex-wrap: wrap; /* Wrapping of flex items */
+    gap: 10px;
+  padding: 24px 40px;
+  box-sizing: border-box;
+}
+
+/* ==================================
+   LOGO ITEM
+================================== */
+.logo > div {
+  /* All Flexbox Properties for Items */
+  display: flex;
+  flex-direction: row; /* Direction inside item */
+  justify-content: flex-start; /* Alignment inside item */
+  align-items: center; /* Vertical alignment inside item */
+  flex-grow: 1; /* Grow factor */
+  flex-shrink: 1; /* Shrink factor */
+  flex-basis: auto; /* Initial size */
+  order: 0; /* Order of appearance */
+  align-self: auto; /* Override align-items for this item */
+
+  gap: 10px;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+
+  padding: 10px 16px;
+  background-color:gray;
+  border-radius: 10px;
+  border: 1px solid #000;
+
+  transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+/* .logo > div:hover {
+  background-color: rgba(0, 191, 166, 0.1);
+  border-color: #00bfa6;
+} */
+
+/* Icon */
+.logo svg {
+  font-size: 26px;
+  color: #c9d5d4;
+}
+
+/* ==================================
+   TABLET RESPONSIVE
+================================== */
+@media (max-width: 768px) {
+  .logo {
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+  }
+
+  .logo > div {
+    font-size: 15px;
+    flex-basis: 200px; /* Adjust basis for tablet */
+  }
+}
+
+/* ==================================
+   MOBILE RESPONSIVE
+================================== */
+@media (max-width: 480px) {
+  .logo {
+    flex-direction: column; /* Stack vertically on mobile */
+    align-items: center;
+    align-content: center;
+  }
+
+  .logo > div {
+    width: 80%;
+    justify-content: center;
+    text-align: center;
+    flex-basis: auto;
+    order: 0; /* Reset order for mobile */
+  }
+}

@@ -1,0 +1,266 @@
+/* ----------- Reset ----------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6fb;
+}
+
+/* ----------- Main Container ----------- */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+/* ----------- Card Wrapper ----------- */
+.login-wrapper {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ----------- Left ----------- */
+.login-left {
+  width: 100%;
+  padding: 28px;
+}
+
+.login-left h2 {
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 26px;
+  color: #111827;
+}
+
+/* ----------- Form ----------- */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* ----------- Password + Eye ----------- */
+.password-box {
+  position: relative;
+  width: 100%;
+}
+
+.password-box input {
+  width: 100%;
+  padding: 12px 42px 12px 12px;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #64748b;
+}
+
+.eye-icon:hover {
+  color: #2563eb;
+}
+
+/* ----------- Checkbox ----------- */
+.checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* ----------- Button ----------- */
+.login-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.login-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ----------- Divider ----------- */
+.second-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0;
+}
+
+.second-option hr {
+  flex: 1;
+  border: none;
+  height: 1px;
+  background: #cbd5e1;
+}
+
+.second-option div {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+/* ----------- Google Login ----------- */
+.login-with-google {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.login-with-google:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.login-with-google:active {
+  transform: translateY(0px);
+}
+
+.google-login-image {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.google-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ----------- Responsive ----------- */
+@media (max-width: 480px) {
+  .login-left {
+    padding: 18px;
+  }
+
+  .login-left h2 {
+    font-size: 22px;
+  }
+
+  .form-group input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+    padding: 11px;
+  }
+}
+.auth-switch {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 14px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.auth-link {
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+.link-item{
+  text-decoration: none;
+}
+/* Forget Password */
+.forgot-password {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -6px;
+}
+
+.forgot-link {
+  font-size: 13px;
+  color: #2563eb;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+.auth-link-btn {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.auth-link-btn:hover {
+  text-decoration: underline;
+}

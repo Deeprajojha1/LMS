@@ -1,0 +1,383 @@
+/* ✅ MAIN PAGE */
+.coursesMainContainer {
+  width: 100%;
+  min-height: 100vh;
+  background: #f6f7fb;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+.coursesWrapper {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ✅ HEADER */
+.coursesTopHeader {
+  width: 100%;
+  background: white;
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+
+.coursesHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.backIconBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #eef0ff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backIcon {
+  font-size: 18px;
+  color: #4f46e5;
+  cursor: pointer;
+}
+
+.coursesHeading {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+}
+
+.coursesHeaderRight {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.createCourseBtn {
+  border: none;
+  outline: none;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+  font-weight: 800;
+}
+
+/* ========================================================= */
+/* ✅ DESKTOP TABLE (DEFAULT SHOW) */
+/* ========================================================= */
+.desktopTableContainer {
+  width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.desktopTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.desktopTableHead {
+  background: #eef0ff;
+}
+
+.desktopHeadCell {
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 800;
+  color: #222;
+}
+
+.desktopRow {
+  border-top: 1px solid #eee;
+  transition: 0.2s;
+}
+
+.desktopRow:hover {
+  background: #fafaff;
+}
+
+.desktopCell {
+  padding: 14px;
+}
+
+/* ✅ Course Name */
+.courseNameBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.courseIconBox {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #eef0ff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.courseIcon {
+  color: #4f46e5;
+  font-size: 18px;
+}
+
+.courseTextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.courseName {
+  font-size: 14px;
+  font-weight: 900;
+  color: #111;
+}
+
+.courseDuration {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+}
+
+/* ✅ Price */
+.priceBox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rupeeIcon {
+  color: #4f46e5;
+  font-size: 16px;
+}
+
+.coursePrice {
+  font-weight: 900;
+  color: #111;
+}
+
+/* ✅ Status */
+.statusBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusIcon {
+  color: #4f46e5;
+  font-size: 16px;
+}
+
+.statusBadge {
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.statusBadge.active {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.statusBadge.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ✅ Actions */
+.actionBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.viewBtn {
+  border: none;
+  padding: 9px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #eef0ff;
+  color: #4f46e5;
+  font-weight: 900;
+}
+
+.editBtn {
+  border: none;
+  padding: 9px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  font-weight: 900;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.editIcon {
+  font-size: 14px;
+}
+
+/* ========================================================= */
+/* ✅ MOBILE TABLE (HIDDEN ON DESKTOP) */
+/* ========================================================= */
+.mobileTableContainer {
+  display: none;
+}
+
+/* ✅ Mobile Table */
+.mobileTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mobileRow {
+  width: 100%;
+}
+
+.mobileCell {
+  padding: 0px;
+}
+
+/* ✅ Mobile Table Card Look (still inside table) */
+.mobileCourseCard {
+  width: 100%;
+  background: white;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+  
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin: 10px 0px;
+}
+
+.mobileTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobileTitleBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobileCourseName {
+  font-size: 15px;
+  font-weight: 900;
+  color: #111;
+}
+
+.mobileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobileInfoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobileLabel {
+  font-size: 13px;
+  font-weight: 800;
+  color: #555;
+}
+
+.mobileValue {
+  font-size: 13px;
+  font-weight: 900;
+  color: #111;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mobileActions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ========================================================= */
+/* ✅ RESPONSIVE SWITCH (Desktop -> Mobile Table) */
+/* ========================================================= */
+@media (max-width: 768px) {
+  .coursesTopHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .coursesHeaderRight {
+    width: 100%;
+  }
+
+  .createCourseBtn {
+    width: 100%;
+  }
+
+  /* ✅ Hide desktop table */
+  .desktopTableContainer {
+    display: none;
+  }
+
+  /* ✅ Show mobile table */
+  .mobileTableContainer {
+    display: block;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .coursesMainContainer {
+    padding: 10px;
+  }
+
+  .coursesHeading {
+    font-size: 18px;
+  }
+
+  .mobileActions {
+    flex-direction: column;
+  }
+
+  .viewBtn,
+  .editBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+.courseThumbnail {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}

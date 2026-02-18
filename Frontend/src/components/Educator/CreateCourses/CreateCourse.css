@@ -1,0 +1,171 @@
+/* ✅ Page Layout */
+.createCoursePage {
+  width: 100%;
+  min-height: 100vh;
+  background: #f6f7fb;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 18px;
+}
+
+/* ✅ Main Box */
+.createCourseContainer {
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ✅ Header */
+.createCourseHeader {
+  width: 100%;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.createCourseHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.backBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #eef0ff;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #4f46e5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+}
+
+.backBtn:hover {
+  background: #dfe3ff;
+}
+
+.createCourseTitle {
+  font-size: 20px;
+  font-weight: 900;
+  color: #111;
+}
+
+/* ✅ Form */
+.createCourseForm {
+  width: 100%;
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.formGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.formLabel {
+  font-size: 14px;
+  font-weight: 800;
+  color: #222;
+}
+
+.formInput,
+.formSelect {
+  width: 100%;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 0px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  background: #fafafa;
+  transition: 0.2s ease-in-out;
+}
+
+.formInput:focus,
+.formSelect:focus {
+  border: 1px solid #4f46e5;
+  background: #ffffff;
+}
+
+/* ✅ Buttons */
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submitBtn {
+  flex: 1;
+  height: 46px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 900;
+  font-size: 14px;
+  transition: 0.2s ease-in-out;
+}
+
+.submitBtn:hover {
+  background: #332bd3;
+}
+
+.cancelBtn {
+  flex: 1;
+  height: 46px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #111827;
+  color: #fff;
+  font-weight: 900;
+  font-size: 14px;
+  transition: 0.2s ease-in-out;
+}
+
+.cancelBtn:hover {
+  background: #000;
+}
+
+/* ✅ Responsive */
+@media (max-width: 480px) {
+  .createCoursePage {
+    padding: 12px;
+  }
+
+  .createCourseTitle {
+    font-size: 18px;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .submitBtn,
+  .cancelBtn {
+    width: 100%;
+  }
+}
