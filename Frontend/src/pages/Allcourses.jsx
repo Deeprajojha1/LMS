@@ -20,7 +20,7 @@ const categories = [
 
 const Allcourses = () => {
     const navigate = useNavigate();
-    const { courses } = useSelector((state) => state.course);
+    const { courseData, courses } = useSelector((state) => state.course);
     const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 900);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -31,7 +31,8 @@ const Allcourses = () => {
     };
 
     useEffect(() => {
-        let published = courses?.filter((c) => c.isPublished) || [];
+        const source = (courseData?.length ? courseData : courses) || [];
+        let published = source?.filter((c) => c.isPublished) || [];
 
         if (selectedCategory) {
             published = published.filter(
@@ -40,7 +41,7 @@ const Allcourses = () => {
         }
 
         setFilteredCourses(published);
-    }, [courses, selectedCategory]);
+    }, [courseData, courses, selectedCategory]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -136,7 +137,7 @@ const Allcourses = () => {
                                     onClick={() => handleViewCourse(course)}
                                 >
                                     <div className="card-thumb">
-                                        <img src={course.thumnail} alt={course.title} />
+                                        <img src={course?.thumnail || course?.thumbnail} alt={course.title} />
                                     </div>
 
                                     <div className="card-body">

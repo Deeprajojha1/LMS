@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { FaArrowLeft, FaPlay } from "react-icons/fa6";
+import React, { useEffect, useMemo } from "react";
+import { FaArrowLeft } from "react-icons/fa6";
 import { MdOndemandVideo, MdOutlineAccessTime, MdOutlineWorkspacePremium } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { setSelectedCourse } from "../../redux/courseSlice";
 import "./ViewCourses.css";
 
@@ -12,7 +13,6 @@ const FALLBACK_THUMB =
 const ViewCourses = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [previewLecture, setPreviewLecture] = useState(null);
   const { courseId } = useParams();
   const { courseData, selectedCourse, courses } = useSelector((state) => state.course);
 
@@ -28,6 +28,7 @@ const ViewCourses = () => {
 
   const course = courseFromPublished || courseFromCreator || selectedCourse;
   const lectures = course?.lectures || [];
+  const hasLectures = lectures.length > 0;
 
   useEffect(() => {
     if (course) {
@@ -71,27 +72,56 @@ const ViewCourses = () => {
     return `Rs. ${numeric.toLocaleString("en-IN")}`;
   };
 
-  const buildVideoUrl = (rawUrl) => {
-    if (!rawUrl) return null;
-    if (/^https?:\/\//i.test(rawUrl)) {
-      return rawUrl;
-    }
-    const trimmed = rawUrl.replace(/^\\+/g, "").replace(/^\/+/, "");
-    return `${import.meta.env.VITE_API_URL || "http://localhost:3000"}/${trimmed}`;
-  };
+  const isCourseFree = useMemo(() => {
+    const price = course?.price;
+    if (price === null || price === undefined || price === "") return true;
+    if (typeof price === "string" && price.trim().toLowerCase() === "free") return true;
+    const cleaned = typeof price === "string" ? price.replace(/[^\d.]/g, "") : price;
+    const numeric = typeof cleaned === "number" ? cleaned : Number(cleaned);
+    return !Number.isNaN(numeric) && numeric === 0;
+  }, [course?.price]);
 
-  const handlePreview = (lecture) => {
-    const videoSrc = buildVideoUrl(lecture?.videoUrl);
-    if (!videoSrc) return;
-    setPreviewLecture({
-      title: lecture?.title || "Preview",
-      src: videoSrc,
-    });
-  };
+  const hasFreePreviewLecture = useMemo(() => {
+    if (!lectures?.length) return false;
+    return lectures.some((lecture) => Boolean(lecture?.isPreviewFree));
+  }, [lectures]);
+
+  const canWatchNow = isCourseFree || hasFreePreviewLecture;
+
+  const premiumLectureCount = useMemo(() => {
+    if (!lectures?.length) return 0;
+    return lectures.filter((lecture) => !lecture?.isPreviewFree).length;
+  }, [lectures]);
 
   const handleBack = () => navigate(-1);
 
+  const handlePrimaryAction = () => {
+    if (hasLectures && canWatchNow) {
+      navigate(`/watch-course/${courseId}`);
+    }
+  };
+
+  const handleEnrollAction = () => {
+    if (!hasLectures) return;
+    toast.info("Enrollment coming soon.");
+  };
+
   if (!course) {
+    if (!courseData && !courses && !selectedCourse) {
+      return (
+        <div className="viewCoursePage">
+          <div className="viewCourseWrapper">
+            <button className="vcBackBtn" onClick={handleBack}>
+              <FaArrowLeft /> Back
+            </button>
+            <div className="vcEmptyState">
+              <h2>Loading course...</h2>
+              <p>Please wait a moment.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="viewCoursePage">
         <div className="viewCourseWrapper">
@@ -160,7 +190,26 @@ const ViewCourses = () => {
                 <p className="vcLabel">Course Price</p>
                 <p className="vcPrice">{formatPrice(course?.price)}</p>
               </div>
-              <button className="vcPrimaryBtn">Enroll Now</button>
+              {hasLectures ? (
+                canWatchNow && !isCourseFree ? (
+                  <div className="vcBtnGroup">
+                    <button className="vcPrimaryBtn" onClick={handlePrimaryAction} type="button">
+                      Watch Now
+                    </button>
+                    <button className="vcSecondaryBtn" onClick={handleEnrollAction} type="button">
+                      Enroll Now
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className="vcPrimaryBtn"
+                    onClick={canWatchNow ? handlePrimaryAction : handleEnrollAction}
+                    type="button"
+                  >
+                    {canWatchNow ? "Watch Now" : "Enroll Now"}
+                  </button>
+                )
+              ) : null}
             </div>
           </div>
         </section>
@@ -188,7 +237,9 @@ const ViewCourses = () => {
         <section className="vcLectures">
           <div className="vcSectionHeading">
             <h2>Course Curriculum</h2>
-            <span>{lectures.length} modules</span>
+            <span>
+              {lectures.length} modules{!isCourseFree && premiumLectureCount ? ` • ${premiumLectureCount} premium` : ""}
+            </span>
           </div>
 
           {lectures.length ? (
@@ -198,18 +249,6 @@ const ViewCourses = () => {
                   <div className="vcLectureIndex">{index + 1}</div>
                   <div className="vcLectureBody">
                     <p className="vcLectureTitle">{lecture?.title}</p>
-                    {lecture?.isPreviewFree ? (
-                      <button
-                        type="button"
-                        className="vcLectureTag free"
-                        onClick={() => handlePreview(lecture)}
-                      >
-                        <FaPlay className="vcPreviewIcon" />
-                        Free Preview
-                      </button>
-                    ) : (
-                      <span className="vcLectureTag locked">Premium</span>
-                    )}
                   </div>
                 </div>
               ))}
@@ -222,21 +261,6 @@ const ViewCourses = () => {
         </section>
       </div>
 
-      {previewLecture && (
-        <div className="vcPreviewOverlay" onClick={() => setPreviewLecture(null)}>
-          <div className="vcPreviewCard" onClick={(e) => e.stopPropagation()}>
-            <button
-              type="button"
-              className="vcPreviewClose"
-              onClick={() => setPreviewLecture(null)}
-            >
-              ×
-            </button>
-            <h3>{previewLecture.title}</h3>
-            <video controls src={previewLecture.src} autoPlay playsInline />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

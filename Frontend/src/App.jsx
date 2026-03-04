@@ -24,6 +24,7 @@ import CreateLecture from "./components/Educator/CreateLectures/CreateLecture.js
 import EditLecture from "./components/Educator/EditLecture/EditLecture.jsx";
 import Allcourses from "./pages/Allcourses.jsx";
 import ViewCourses from "./components/ViewCourses/ViewCourses.jsx";
+import WatchCourse from "./components/WatchCourse/WatchCourse.jsx";
 const App = () => {
   useGetCurrentUser();
   useGetCreatorCourse();
@@ -102,6 +103,10 @@ const App = () => {
         <Route
           path="/view-courses/:courseId"
           element={userData ? <ViewCourses /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/watch-course/:courseId"
+          element={userData ? <WatchCourse /> : <Navigate to="/login" />}
         />
         {/* crear lecture */}
         <Route

@@ -130,6 +130,31 @@
   gap: 16px;
 }
 
+.vcBtnGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.vcSecondaryBtn {
+  border: 1px solid #0f172a;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 14px 22px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vcSecondaryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+}
+
 .vcLabel {
   margin: 0;
   color: #6b7280;
@@ -355,6 +380,11 @@
   .vcPriceRow {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .vcBtnGroup {
+    width: 100%;
+    justify-content: flex-start;
   }
 }
 

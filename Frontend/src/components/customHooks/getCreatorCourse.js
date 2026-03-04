@@ -9,6 +9,7 @@ export const useGetCreatorCourse = () => {
     
     useEffect(() => {
         if (!userData) return;
+        if (userData?.role !== "educator") return;
 
         const fetchCourses = async () => {
             try {

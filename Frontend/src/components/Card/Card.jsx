@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userData);
-  const { courses } = useSelector((state) => state.course);
+  const { courseData, courses } = useSelector((state) => state.course);
   const [popularCourses, setPopularCourses] = useState([]);
 
   useEffect(() => {
-    setPopularCourses(courses ? courses.filter((course) => course.isPublished) : []);
-  }, [courses]);
+    const source = (courseData?.length ? courseData : courses) || [];
+    setPopularCourses(source.filter((course) => course.isPublished));
+  }, [courseData, courses]);
 
   const handlePopularCardClick = (courseId) => {
     if (!userData) {
@@ -49,7 +50,11 @@ const Cart = () => {
               onClick={() => handlePopularCardClick(each._id)}
             >
               <div className="courseThumbWrap">
-                <img src={each.thumnail} alt={each.title} className="courseThumb" />
+                <img
+                  src={each?.thumnail || each?.thumbnail}
+                  alt={each.title}
+                  className="courseThumb"
+                />
               </div>
 
               <div className="courseBody">
@@ -70,7 +75,7 @@ const Cart = () => {
         </div>
 
         {popularCourses.length === 0 && (
-          <p className="emptyText">No popular courses found</p>
+          <p className="emptyText">{courseData || courses ? "No popular courses found" : "Loading courses..."}</p>
         )}
       </div>
     </div>
