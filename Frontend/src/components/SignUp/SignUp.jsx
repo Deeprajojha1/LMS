@@ -61,7 +61,8 @@ const SignUp = () => {
         formData
         , { withCredentials: true }
       );
-      dispatch(setUserData(res.data.user))
+      dispatch(setUserData(res.data.user));
+      localStorage.setItem("lms_user", JSON.stringify(res.data.user));
       toast.success(res.data?.message || "Signup Successful ✅");
 
       setFormData({
@@ -99,6 +100,7 @@ const googleSignup = async () => {
     );
 
     dispatch(setUserData(res.data.user));
+    localStorage.setItem("lms_user", JSON.stringify(res.data.user));
     toast.success(res.data?.message || "Signup Successful ✅");
 
     setFormData({

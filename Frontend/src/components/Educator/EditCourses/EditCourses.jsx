@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { MdCurrencyRupee } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { setCourses } from "../../../redux/courseSlice";
 import "react-toastify/dist/ReactToastify.css";
 import "./EditCourses.css";
 
@@ -38,7 +39,7 @@ const EditCourses = () => {
       const response = await axios.get("http://localhost:3000/api/courses/getcreatercourses", {
         withCredentials: true
       });
-      dispatch({ type: "course/setCourses", payload: response.data.courses });
+      dispatch(setCourses(response.data.courses));
     } catch (error) {
       console.log("Error refreshing courses:", error);
     }

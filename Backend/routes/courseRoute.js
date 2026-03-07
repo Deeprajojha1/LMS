@@ -1,6 +1,6 @@
 import express from "express";
 import { createCourse, editCourse, deleteCourse, getCourseById,getPublishedCourses,getCreaterCourses
-    ,createLecture,getCourseLeacture,editLecture,removeLecture
+    ,createLecture,getCourseLeacture,editLecture,removeLecture,addOrUpdateCourseReview,getCourseReviews
  } from "../controllers/courseController.js";
 import  upload  from "../middlewares/multer.js";
 import isAuth from "../middlewares/isAuth.js";
@@ -19,5 +19,9 @@ router.post("/createlecture/:courseId",isAuth,createLecture);
 router.get("/getcourselecture/:id",isAuth,getCourseLeacture);
 router.post("/editlecture/:lectureId",isAuth,upload.single("video"),editLecture);
 router.delete("/removeteature/:lectureId",isAuth,removeLecture);
+
+// review routes
+router.get("/:courseId/reviews", getCourseReviews);
+router.post("/:courseId/reviews", isAuth, addOrUpdateCourseReview);
 
 export default router;

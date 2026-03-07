@@ -46,7 +46,8 @@ const Login = () => {
             );
 
             toast.success(res.data?.message || "Login Successful ✅");
-            dispatch(setUserData(res.data.user))
+            dispatch(setUserData(res.data.user));
+            localStorage.setItem("lms_user", JSON.stringify(res.data.user));
             setFormData({
                 email: "",
                 password: "",
@@ -79,6 +80,7 @@ const Login = () => {
             );
 
             dispatch(setUserData(res.data.user));
+            localStorage.setItem("lms_user", JSON.stringify(res.data.user));
             toast.success(res.data?.message || "Login Successful ✅");
 
             setFormData({

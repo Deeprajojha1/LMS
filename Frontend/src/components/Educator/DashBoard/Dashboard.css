@@ -99,7 +99,7 @@
 .dashboardStats {
   margin-top: 16px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -163,20 +163,87 @@
   color: #cbd5e1;
 }
 
-.dashboardChartPlaceholder {
+.dashboardAnalyticsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboardStatusGrid {
   margin-top: 16px;
-  height: 180px;
-  border-radius: 14px;
-  border: 1px dashed rgba(148, 163, 184, 0.7);
-  background:
-    linear-gradient(120deg, rgba(59, 130, 246, 0.14), rgba(16, 185, 129, 0.16)),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 18px,
-      rgba(148, 163, 184, 0.1) 18px,
-      rgba(148, 163, 184, 0.1) 19px
-    );
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.dashboardStatusPill {
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(30, 64, 175, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dashboardStatusPill span {
+  font-size: 12px;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.dashboardStatusPill b {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.dashboardStatusPill.draft {
+  background: rgba(245, 158, 11, 0.18);
+}
+
+.dashboardBarList {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashboardBarRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dashboardBarLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.dashboardBarTrack {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.2);
+  overflow: hidden;
+}
+
+.dashboardBarFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #38bdf8, #3b82f6);
+}
+
+.dashboardBarFill.enroll {
+  background: linear-gradient(90deg, #34d399, #10b981);
+}
+
+.dashboardEmptyText {
+  margin: 4px 0 0;
+  color: #94a3b8;
 }
 
 @media (max-width: 860px) {
@@ -194,6 +261,10 @@
   }
 
   .dashboardStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboardAnalyticsGrid {
     grid-template-columns: 1fr;
   }
 }
@@ -206,6 +277,10 @@
   .dashboardHeroCard,
   .dashboardChartCard {
     padding: 16px;
+  }
+
+  .dashboardStats {
+    grid-template-columns: 1fr;
   }
 
   .dashboardAvatarImage,

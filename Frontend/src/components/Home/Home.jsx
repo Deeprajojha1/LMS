@@ -9,6 +9,8 @@ import { FaGooglePlay } from "react-icons/fa";
 import ExploreCouses from "../ExploreCouses/ExploreCouses";
 import Cart from "../Card/Card";
 import { useNavigate } from "react-router-dom";
+import About from "../About/About";
+import Footer from "../Footer/Footer";
 
 const Home = () => {
   const navigate=useNavigate();
@@ -41,6 +43,8 @@ const Home = () => {
        {/* <Logo/> */}
        <ExploreCouses />
        <Cart/>
+       <About/>
+       <Footer/>
     </>
   );
 };

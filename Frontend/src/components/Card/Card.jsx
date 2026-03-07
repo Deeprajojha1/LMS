@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import "./Card.css";
+import { FaStar } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -7,11 +8,9 @@ const Cart = () => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userData);
   const { courseData, courses } = useSelector((state) => state.course);
-  const [popularCourses, setPopularCourses] = useState([]);
-
-  useEffect(() => {
+  const popularCourses = useMemo(() => {
     const source = (courseData?.length ? courseData : courses) || [];
-    setPopularCourses(source.filter((course) => course.isPublished));
+    return source.filter((course) => course.isPublished);
   }, [courseData, courses]);
 
   const handlePopularCardClick = (courseId) => {
@@ -68,6 +67,15 @@ const Cart = () => {
                 </div>
                 <div className="courseFooter">
                   <p className="coursePrice">Rs. {each.price}</p>
+                  <div className="courseRatingWrap">
+                    <span className="courseRatingBadge">
+                      <FaStar />
+                      {Number(each?.reviewCount || 0) ? Number(each?.averageRating || 0).toFixed(1) : "0.0"}
+                    </span>
+                    <span className="courseRatingText">
+                      {Number(each?.reviewCount || 0) ? `${Number(each.reviewCount)} reviews` : "No reviews"}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,250 +1,208 @@
-/* =========================
-   Popular Courses Section (PRO)
-========================= */
-
 .popularPage {
   width: 100%;
-  padding: 70px 16px;
-  background: linear-gradient(180deg, #5b657d 0%, #e6e7eb 100%);
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
+  padding: clamp(54px, 7vw, 94px) clamp(16px, 5vw, 70px);
+  background:
+    radial-gradient(circle at 90% 10%, rgba(72, 162, 255, 0.24), transparent 34%),
+    linear-gradient(180deg, #eef5ff 0%, #f8fbff 100%);
 }
 
 .popularContainer {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1320px;
+  margin: 0 auto;
 }
 
-/* =========================
-   Header
-========================= */
-
 .popularHeader {
-  text-align: center;
-  margin-bottom: 46px;
+  margin-bottom: 30px;
+  animation: fadeUp 0.7s ease both;
 }
 
 .popularTitle {
-  font-size: clamp(1.7rem, 2.6vw, 2.6rem);
-  font-weight: 900;
-  letter-spacing: 0.3px;
-  margin-bottom: 10px;
+  margin: 0 0 12px;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  color: #0f2247;
   line-height: 1.15;
 }
 
 .popularSubtitle {
+  margin: 0;
   max-width: 860px;
-  margin: 0 auto;
-  font-size: clamp(0.95rem, 1.1vw, 1.08rem);
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.72);
+  color: #4f6284;
+  line-height: 1.7;
 }
-
-/* =========================
-   Grid
-========================= */
 
 .popularGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  gap: 18px;
 }
-
-/* =========================
-   Card
-========================= */
 
 .courseCard {
-  border-radius: 18px;
+  border-radius: 16px;
   overflow: hidden;
-  background: rgba(107, 71, 71, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.35);
-  transition: transform 0.25s ease, border 0.25s ease, background 0.25s ease;
+  background: #ffffff;
+  border: 1px solid #dce9ff;
+  box-shadow: 0 14px 30px rgba(21, 44, 88, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   cursor: pointer;
-  position: relative;
-}
-
-.courseCard::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at top left,
-    rgba(87, 106, 111, 0.14),
-    transparent 55%
-  );
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  pointer-events: none;
-}
-
-.courseCard:hover::before {
-  opacity: 1;
+  animation: fadeUp 0.8s ease both;
 }
 
 .courseCard:hover {
-  transform: translateY(-9px);
-  border: 1px solid rgba(92, 220, 255, 0.22);
-  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-5px);
+  border-color: #b5d3ff;
+  box-shadow: 0 20px 36px rgba(21, 44, 88, 0.16);
 }
 
-/* =========================
-   Thumbnail
-========================= */
-
 .courseThumbWrap {
-  width: 100%;
-  height: 200px;
+  height: 196px;
   overflow: hidden;
-  background: rgba(124, 86, 86, 0.03);
+  background: #e8f2ff;
 }
 
 .courseThumb {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1);
   transition: transform 0.35s ease;
 }
 
 .courseCard:hover .courseThumb {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
-/* =========================
-   Card Body
-========================= */
-
 .courseBody {
-  padding: 16px;
-  position: relative;
- background-color: #6e5454;
-  z-index: 1;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 220px;
 }
 
 .courseMetaRow {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
 .courseCategory,
 .courseLevel {
-  font-size: 0.78rem;
-  font-weight: 800;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 999px;
-  white-space: nowrap;
-  letter-spacing: 0.2px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 .courseCategory {
-  background: rgba(182, 198, 202, 0.14);
-  color: #5cdcff;
-  border: 1px solid rgba(92, 220, 255, 0.22);
+  color: #0f58ba;
+  background: #e8f2ff;
 }
 
 .courseLevel {
-  background: rgba(147, 135, 117, 0.14);
-  color: #ffbc5c;
-  border: 1px solid rgba(255, 188, 92, 0.22);
+  color: #956205;
+  background: #fff2d8;
+}
+
+.content {
+  margin-bottom: 0;
 }
 
 .courseName {
-  font-size: 1.14rem;
-  font-weight: 900;
-  margin: 0 0 8px 0;
-  line-height: 1.25;
-  letter-spacing: 0.2px;
+  margin: 0 0 7px;
+  color: #12284f;
+  font-size: 1.08rem;
+  line-height: 1.28;
 }
 
 .courseDesc {
- font-size: 0.95rem;
- line-height: 1.55;
- color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  color: #5a6c8b;
+  font-size: 0.92rem;
+  line-height: 1.55;
 }
-
-/* =========================
-   Footer
-========================= */
 
 .courseFooter {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.courseRatingWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 0;
+  margin-left: auto;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.courseRatingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #12284f;
+  width: fit-content;
+}
+
+.courseRatingBadge svg {
+  color: #f59e0b;
+  font-size: 0.82rem;
+}
+
+.courseRatingText {
+  color: #667897;
+  font-size: 0.76rem;
+  font-weight: 600;
 }
 
 .coursePrice {
-  font-size: 1.08rem;
+  margin: 0;
+  color: #083d87;
+  font-size: 1.03rem;
   font-weight: 900;
-  color: #f7f4f4;
-  letter-spacing: 0.2px;
 }
-
-/* =========================
-   Empty State
-========================= */
 
 .emptyText {
-  text-align: center;
-  margin-top: 28px;
-  color: rgba(255, 255, 255, 0.65);
+  margin-top: 16px;
+  color: #5a6d8e;
 }
 
-/* =========================
-   Responsive Breakpoints
-========================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-/* Tablet */
 @media (max-width: 1024px) {
   .popularGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .courseThumbWrap {
-    height: 185px;
-  }
 }
 
-/* Mobile */
-@media (max-width: 640px) {
-  .popularPage {
-    padding: 56px 14px;
-  }
-
+@media (max-width: 620px) {
   .popularHeader {
     text-align: left;
-    margin-bottom: 30px;
-  }
-
-  .popularSubtitle {
-    margin: 0;
   }
 
   .popularGrid {
     grid-template-columns: 1fr;
-    gap: 16px;
   }
 
   .courseThumbWrap {
-    height: 175px;
+    height: 184px;
   }
-
-  .courseFooter {
-    justify-content: flex-start;
-  }
-}
-.content{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 12px;
 }

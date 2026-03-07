@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdOndemandVideo, MdOutlineAccessTime, MdOutlineWorkspacePremium } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 import { setSelectedCourse } from "../../redux/courseSlice";
 import "./ViewCourses.css";
 
@@ -15,6 +16,13 @@ const ViewCourses = () => {
   const dispatch = useDispatch();
   const { courseId } = useParams();
   const { courseData, selectedCourse, courses } = useSelector((state) => state.course);
+  const userData = useSelector((state) => state.user.userData);
+  const [reviews, setReviews] = useState([]);
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewComment, setReviewComment] = useState("");
+  const [isReviewLoading, setIsReviewLoading] = useState(false);
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+  const [reviewStats, setReviewStats] = useState({ averageRating: 0, reviewCount: 0 });
 
   const courseFromPublished = useMemo(() => {
     if (!courseData) return null;
@@ -27,7 +35,7 @@ const ViewCourses = () => {
   }, [courses, courseId]);
 
   const course = courseFromPublished || courseFromCreator || selectedCourse;
-  const lectures = course?.lectures || [];
+  const lectures = useMemo(() => course?.lectures || [], [course]);
   const hasLectures = lectures.length > 0;
 
   useEffect(() => {
@@ -35,6 +43,30 @@ const ViewCourses = () => {
       dispatch(setSelectedCourse(course));
     }
   }, [course, courseId, dispatch]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        setIsReviewLoading(true);
+        const response = await axios.get(`http://localhost:3000/api/courses/${courseId}/reviews`, {
+          withCredentials: true,
+        });
+        setReviews(response.data?.reviews || []);
+        setReviewStats({
+          averageRating: response.data?.averageRating || 0,
+          reviewCount: response.data?.reviewCount || 0,
+        });
+      } catch (error) {
+        console.log("Fetch reviews error:", error.response?.data || error.message);
+      } finally {
+        setIsReviewLoading(false);
+      }
+    };
+
+    if (courseId) {
+      fetchReviews();
+    }
+  }, [courseId]);
 
   const courseThumb = course?.thumbnail || course?.thumnail || FALLBACK_THUMB;
 
@@ -104,6 +136,51 @@ const ViewCourses = () => {
   const handleEnrollAction = () => {
     if (!hasLectures) return;
     toast.info("Enrollment coming soon.");
+  };
+
+  const handleSubmitReview = async () => {
+    if (!userData) {
+      toast.info("Please login to submit a review.");
+      navigate("/login");
+      return;
+    }
+
+    if (!reviewRating) {
+      toast.error("Please select a rating.");
+      return;
+    }
+
+    if (!reviewComment.trim()) {
+      toast.error("Please write your review.");
+      return;
+    }
+
+    try {
+      setIsSubmittingReview(true);
+      const response = await axios.post(
+        `http://localhost:3000/api/courses/${courseId}/reviews`,
+        { rating: reviewRating, comment: reviewComment.trim() },
+        { withCredentials: true }
+      );
+
+      const submittedReview = response.data?.review;
+      if (submittedReview) {
+        setReviews((prev) => {
+          const withoutCurrentUser = prev.filter(
+            (item) => item?.user?._id !== submittedReview?.user?._id
+          );
+          return [submittedReview, ...withoutCurrentUser];
+        });
+      }
+
+      setReviewComment("");
+      setReviewRating(0);
+      toast.success("Review submitted successfully.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to submit review.");
+    } finally {
+      setIsSubmittingReview(false);
+    }
   };
 
   if (!course) {
@@ -258,6 +335,76 @@ const ViewCourses = () => {
               <p>No lectures added yet. Stay tuned!</p>
             </div>
           )}
+        </section>
+
+        <section className="vcReviews">
+          <div className="vcSectionHeading">
+            <h2>Write a Review</h2>
+            <span>
+              {reviewStats.averageRating ? `${reviewStats.averageRating}/5` : "No rating yet"} •{" "}
+              {reviewStats.reviewCount} review{reviewStats.reviewCount === 1 ? "" : "s"}
+            </span>
+          </div>
+
+          <div className="vcReviewForm">
+            <div className="vcRatingRow">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  className={`vcStarBtn ${star <= reviewRating ? "active" : ""}`}
+                  onClick={() => setReviewRating(star)}
+                  aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
+
+            <textarea
+              className="vcReviewInput"
+              placeholder="Write your review here..."
+              value={reviewComment}
+              onChange={(e) => setReviewComment(e.target.value)}
+              rows={4}
+            />
+
+            <button
+              className="vcPrimaryBtn"
+              type="button"
+              onClick={handleSubmitReview}
+              disabled={isSubmittingReview}
+            >
+              {isSubmittingReview ? "Submitting..." : "Submit Review"}
+            </button>
+          </div>
+
+          <div className="vcReviewList">
+            {isReviewLoading ? (
+              <p className="vcReviewEmpty">Loading reviews...</p>
+            ) : reviews.length ? (
+              reviews.map((review) => (
+                <article className="vcReviewCard" key={review._id}>
+                  <div className="vcReviewTop">
+                    <div>
+                      <p className="vcReviewName">{review?.user?.name || "Learner"}</p>
+                      <p className="vcReviewDate">
+                        {new Date(review.createdAt).toLocaleDateString("en-IN", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </p>
+                    </div>
+                    <p className="vcReviewRating">{Array.from({ length: 5 }, (_, idx) => (idx < review.rating ? "★" : "☆")).join("")}</p>
+                  </div>
+                  <p className="vcReviewComment">{review.comment}</p>
+                </article>
+              ))
+            ) : (
+              <p className="vcReviewEmpty">No reviews yet. Be the first to review this course.</p>
+            )}
+          </div>
         </section>
       </div>
 
