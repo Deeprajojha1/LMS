@@ -3,7 +3,7 @@ import "./Allcourses.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 import Nav from "../components/Navbar/Nav";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { FcSearch } from "react-icons/fc";
 import { useSelector } from "react-redux";
 
@@ -22,9 +22,12 @@ const categories = [
 const Allcourses = () => {
   const navigate = useNavigate();
   const { courseData, courses } = useSelector((state) => state.course);
+  const [searchParams] = useSearchParams();
+  const initialQuery = searchParams.get("q") || "";
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 900);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState(initialQuery);
 
   const filteredCourses = useMemo(() => {
     const source = (courseData?.length ? courseData : courses) || [];
@@ -34,8 +37,19 @@ const Allcourses = () => {
       published = published.filter((course) => course.category === selectedCategory);
     }
 
+    const query = searchTerm.trim().toLowerCase();
+    if (query) {
+      published = published.filter((course) => {
+        const title = String(course?.title || "").toLowerCase();
+        const subtitle = String(course?.subTitle || "").toLowerCase();
+        const category = String(course?.category || "").toLowerCase();
+        const description = String(course?.description || "").toLowerCase();
+        return [title, subtitle, category, description].some((field) => field.includes(query));
+      });
+    }
+
     return published;
-  }, [courseData, courses, selectedCategory]);
+  }, [courseData, courses, selectedCategory, searchTerm]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -81,7 +95,7 @@ const Allcourses = () => {
             </div>
           </div>
 
-          <button className="ai-btn">
+          <button className="ai-btn" onClick={()=>navigate('/search-with-ai')}>
             Search with AI
             <FcSearch />
           </button>
@@ -111,6 +125,15 @@ const Allcourses = () => {
             <div>
               <h1>All Courses</h1>
               <p>Explore premium learning experiences designed to accelerate your career.</p>
+              <div className="course-search-box">
+                <FcSearch />
+                <input
+                  type="text"
+                  placeholder="Search courses by title, category, topic..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
               {isMobile && (
                 <button className="filters-toggle-btn" onClick={toggleSidebar}>
                   {isSidebarOpen ? "Close Filters" : "Open Filters"}

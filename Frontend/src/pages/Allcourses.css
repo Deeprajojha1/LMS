@@ -159,6 +159,27 @@
   max-width: 520px;
 }
 
+.course-search-box {
+  margin-top: 14px;
+  width: min(560px, 100%);
+  background: #f8fbff;
+  border: 1px solid var(--ac-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.course-search-box input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+}
+
 .filters-toggle-btn {
   margin-top: 14px;
   border: 0;

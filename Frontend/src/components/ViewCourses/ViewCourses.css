@@ -23,7 +23,7 @@
   border: none;
   background: transparent;
   color: #111827;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 15px;
   cursor: pointer;
   padding: 6px 0;
@@ -64,7 +64,7 @@
   border-radius: 999px;
   background: #eef2ff;
   color: #3743c4;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 13px;
   text-transform: uppercase;
 }
@@ -72,7 +72,7 @@
 .vcTitle {
   margin: 0;
   font-size: 32px;
-  font-weight: 800;
+  font-weight: 700;
   color: #0f172a;
 }
 
@@ -86,7 +86,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: #1f2937;
 }
 
@@ -115,7 +115,7 @@
 .vcStat p {
   margin: 0;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .vcStat small {
@@ -145,8 +145,14 @@
   padding: 14px 22px;
   border-radius: 14px;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 600;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1;
+  white-space: nowrap;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -164,7 +170,7 @@
 .vcPrice {
   margin: 4px 0 0;
   font-size: 30px;
-  font-weight: 800;
+  font-weight: 700;
   color: #0f172a;
 }
 
@@ -175,9 +181,21 @@
   padding: 14px 26px;
   border-radius: 14px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1;
+  white-space: nowrap;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vcPrimaryBtn svg,
+.vcSecondaryBtn svg {
+  font-size: 15px;
+  flex-shrink: 0;
 }
 
 .vcPrimaryBtn:hover {
@@ -206,6 +224,7 @@
   margin: 0;
   font-size: 20px;
   color: #111827;
+  font-weight: 600;
 }
 
 .vcInfoCard ul {
@@ -215,7 +234,7 @@
   flex-direction: column;
   gap: 8px;
   color: #374151;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .vcLectures {
@@ -301,7 +320,7 @@
 
 .vcReviewName {
   margin: 0;
-  font-weight: 700;
+  font-weight: 600;
   color: #0f172a;
 }
 
@@ -319,16 +338,47 @@
   white-space: nowrap;
 }
 
+.vcReviewActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .vcReviewComment {
   margin: 10px 0 0;
   color: #374151;
   line-height: 1.6;
 }
 
+.vcDeleteReviewBtn {
+  border: 1px solid #f8c7cc;
+  background: #fff5f6;
+  color: #b91c1c;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.vcDeleteReviewBtn:hover:not(:disabled) {
+  background: #ffe4e6;
+  transform: translateY(-1px);
+}
+
+.vcDeleteReviewBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .vcReviewEmpty {
   margin: 0;
   color: #6b7280;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .vcSectionHeading {
@@ -363,7 +413,7 @@
   border-radius: 10px;
   background: #eef2ff;
   color: #1d4ed8;
-  font-weight: 700;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -379,7 +429,7 @@
 
 .vcLectureTitle {
   margin: 0;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .vcLectureTag {
@@ -389,7 +439,7 @@
   padding: 6px 16px;
   border-radius: 999px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   border: none;
   cursor: default;
   gap: 6px;

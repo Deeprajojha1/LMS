@@ -11,6 +11,7 @@ import Cart from "../Card/Card";
 import { useNavigate } from "react-router-dom";
 import About from "../About/About";
 import Footer from "../Footer/Footer";
+import ReviewPage from "../ReviewPage/ReviewPage";
 
 const Home = () => {
   const navigate=useNavigate();
@@ -33,7 +34,7 @@ const Home = () => {
           <div className="home-buttons">
             <button className="primary-btn" onClick={() => navigate('/all-courses')}>View All Courses <FaGooglePlay /></button>
 
-            <button className="secondary-btn">
+            <button className="secondary-btn" onClick={() => navigate('/search-with-ai')}>
               <img src={SearchAi} alt="AI Search" />
               Search with AI
             </button>
@@ -43,6 +44,7 @@ const Home = () => {
        {/* <Logo/> */}
        <ExploreCouses />
        <Cart/>
+       <ReviewPage />
        <About/>
        <Footer/>
     </>

@@ -25,6 +25,7 @@ import EditLecture from "./components/Educator/EditLecture/EditLecture.jsx";
 import Allcourses from "./pages/Allcourses.jsx";
 import ViewCourses from "./components/ViewCourses/ViewCourses.jsx";
 import WatchCourse from "./components/WatchCourse/WatchCourse.jsx";
+import SearchWithAi from "./pages/SearchWithAi.jsx";
 const App = () => {
   useGetCurrentUser();
   useGetCreatorCourse();
@@ -116,6 +117,11 @@ const App = () => {
         <Route
           path="/edit-lecture/:courseId/:lectureId"
           element={userData?.role === "educator" ? <EditLecture /> : <Navigate to="/login" />}
+        />
+        {/* Search with Ai */}
+        <Route
+          path="/search-with-ai"
+          element={userData ? <SearchWithAi /> : <Navigate to="/login" />}
         />
         <Route
           path="*"

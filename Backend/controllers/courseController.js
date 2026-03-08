@@ -62,7 +62,7 @@ export const getPublishedCourses = async (req, res) => {
         const courseIds = courses.map((course) => course._id);
 
         const reviewStats = await Review.aggregate([
-            { $match: { course: { $in: courseIds } } },
+            { $match: { course: { $in: courseIds }, isDeleted: false } },
             {
                 $group: {
                     _id: "$course",
@@ -337,11 +337,24 @@ export const addOrUpdateCourseReview = async (req, res) => {
       return res.status(404).json({ message: "Course not found" });
     }
 
+    const hasAnyLectureVideo = await Lecture.exists({
+      _id: { $in: course.lectures || [] },
+      videoUrl: { $exists: true, $ne: "" },
+    });
+
+    if (!hasAnyLectureVideo) {
+      return res.status(400).json({
+        message: "Reviews are allowed only for courses that have at least one lecture video.",
+      });
+    }
+
     let review = await Review.findOne({ course: courseId, user: req.userId });
 
     if (review) {
       review.rating = parsedRating;
       review.comment = trimmedComment;
+      review.isDeleted = false;
+      review.deletedAt = null;
       await review.save();
     } else {
       review = await Review.create({
@@ -349,6 +362,8 @@ export const addOrUpdateCourseReview = async (req, res) => {
         user: req.userId,
         rating: parsedRating,
         comment: trimmedComment,
+        isDeleted: false,
+        deletedAt: null,
       });
     }
 
@@ -370,6 +385,39 @@ export const addOrUpdateCourseReview = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// delete course review (only review owner)
+export const deleteCourseReview = async (req, res) => {
+  try {
+    const { courseId, reviewId } = req.params;
+
+    if (!courseId || !reviewId) {
+      return res.status(400).json({ message: "courseId and reviewId are required" });
+    }
+
+    const review = await Review.findById(reviewId);
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
+    if (review.course?.toString() !== courseId) {
+      return res.status(400).json({ message: "Review does not belong to this course" });
+    }
+
+    if (review.user?.toString() !== req.userId) {
+      return res.status(403).json({ message: "You can delete only your own review" });
+    }
+
+    review.isDeleted = true;
+    review.deletedAt = new Date();
+    await review.save();
+
+    return res.status(200).json({ message: "Review deleted successfully", reviewId });
+  } catch (error) {
+    console.log("deleteCourseReview error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 // get course reviews
 export const getCourseReviews = async (req, res) => {
   try {
@@ -384,7 +432,7 @@ export const getCourseReviews = async (req, res) => {
       return res.status(404).json({ message: "Course not found" });
     }
 
-    const reviews = await Review.find({ course: courseId })
+    const reviews = await Review.find({ course: courseId, isDeleted: false })
       .populate("user", "name photoUrl role")
       .sort({ reviewdAt: -1 });
 
@@ -401,6 +449,54 @@ export const getCourseReviews = async (req, res) => {
     });
   } catch (error) {
     console.log("getCourseReviews error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// get latest reviews across published courses
+export const getLatestReviews = async (req, res) => {
+  try {
+    const parsedLimit = Number(req.query?.limit);
+    const limit = Number.isFinite(parsedLimit)
+      ? Math.min(Math.max(parsedLimit, 1), 12)
+      : 6;
+
+    const reviews = await Review.find({ isDeleted: false })
+      .populate({ path: "course", select: "title isPublished", match: { isPublished: true } })
+      .populate("user", "name photoUrl role")
+      .sort({ createdAt: -1 })
+      .limit(limit * 3);
+
+    const uniqueByUser = [];
+    const seenUsers = new Set();
+
+    for (const review of reviews) {
+      if (!review?.course || !review?.user?._id) continue;
+      const userId = review.user._id.toString();
+      if (seenUsers.has(userId)) continue;
+      seenUsers.add(userId);
+      uniqueByUser.push(review);
+      if (uniqueByUser.length >= limit) break;
+    }
+
+    const filteredReviews = uniqueByUser.map((review) => ({
+      _id: review._id,
+      rating: review.rating,
+      comment: review.comment,
+      createdAt: review.createdAt,
+      user: review.user,
+      course: {
+        _id: review.course?._id,
+        title: review.course?.title,
+      },
+    }));
+
+    return res.status(200).json({
+      message: "Latest reviews fetched successfully",
+      reviews: filteredReviews,
+    });
+  } catch (error) {
+    console.log("getLatestReviews error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

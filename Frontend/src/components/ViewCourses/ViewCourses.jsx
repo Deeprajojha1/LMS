@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdOndemandVideo, MdOutlineAccessTime, MdOutlineWorkspacePremium } from "react-icons/md";
+import { FiTrash2 } from "react-icons/fi";
+import { FaPlay } from "react-icons/fa";
+import { HiMiniAcademicCap } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,17 +14,35 @@ import "./ViewCourses.css";
 const FALLBACK_THUMB =
   "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80";
 
+const normalizeId = (value) => {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (typeof value === "object") {
+    if (typeof value._id === "string") return value._id;
+    if (typeof value.id === "string") return value.id;
+    if (value._id && typeof value._id.toString === "function") return value._id.toString();
+    if (value.id && typeof value.id.toString === "function") return value.id.toString();
+    if (typeof value.toString === "function") {
+      const str = value.toString();
+      return str === "[object Object]" ? "" : str;
+    }
+  }
+  return "";
+};
+
 const ViewCourses = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { courseId } = useParams();
   const { courseData, selectedCourse, courses } = useSelector((state) => state.course);
   const userData = useSelector((state) => state.user.userData);
+  const currentUserId = useMemo(() => normalizeId(userData), [userData]);
   const [reviews, setReviews] = useState([]);
   const [reviewRating, setReviewRating] = useState(0);
   const [reviewComment, setReviewComment] = useState("");
   const [isReviewLoading, setIsReviewLoading] = useState(false);
   const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+  const [deletingReviewId, setDeletingReviewId] = useState("");
   const [reviewStats, setReviewStats] = useState({ averageRating: 0, reviewCount: 0 });
 
   const courseFromPublished = useMemo(() => {
@@ -119,6 +140,10 @@ const ViewCourses = () => {
   }, [lectures]);
 
   const canWatchNow = isCourseFree || hasFreePreviewLecture;
+  const hasReviewEligibleVideo = useMemo(() => {
+    if (!lectures?.length) return false;
+    return lectures.some((lecture) => String(lecture?.videoUrl || "").trim().length > 0);
+  }, [lectures]);
 
   const premiumLectureCount = useMemo(() => {
     if (!lectures?.length) return 0;
@@ -155,6 +180,11 @@ const ViewCourses = () => {
       return;
     }
 
+    if (!hasReviewEligibleVideo) {
+      toast.error("You can review this course only after at least one lecture video is added.");
+      return;
+    }
+
     try {
       setIsSubmittingReview(true);
       const response = await axios.post(
@@ -180,6 +210,41 @@ const ViewCourses = () => {
       toast.error(error.response?.data?.message || "Failed to submit review.");
     } finally {
       setIsSubmittingReview(false);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    if (!reviewId || !courseId) return;
+
+    try {
+      setDeletingReviewId(reviewId);
+      await axios.delete(`http://localhost:3000/api/courses/${courseId}/reviews/${reviewId}`, {
+        withCredentials: true,
+      });
+
+      setReviews((prev) => {
+        const nextReviews = prev.filter((item) => item?._id !== reviewId);
+        const nextCount = nextReviews.length;
+        const nextAvg = nextCount
+          ? Number(
+            (
+              nextReviews.reduce((acc, item) => acc + Number(item?.rating || 0), 0) / nextCount
+            ).toFixed(1)
+          )
+          : 0;
+
+        setReviewStats({
+          averageRating: nextAvg,
+          reviewCount: nextCount,
+        });
+
+        return nextReviews;
+      });
+      toast.success("Review deleted successfully.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to delete review.");
+    } finally {
+      setDeletingReviewId("");
     }
   };
 
@@ -271,10 +336,10 @@ const ViewCourses = () => {
                 canWatchNow && !isCourseFree ? (
                   <div className="vcBtnGroup">
                     <button className="vcPrimaryBtn" onClick={handlePrimaryAction} type="button">
-                      Watch Now
+                      <FaPlay /> Watch Now
                     </button>
                     <button className="vcSecondaryBtn" onClick={handleEnrollAction} type="button">
-                      Enroll Now
+                      <HiMiniAcademicCap /> Enroll Now
                     </button>
                   </div>
                 ) : (
@@ -283,7 +348,15 @@ const ViewCourses = () => {
                     onClick={canWatchNow ? handlePrimaryAction : handleEnrollAction}
                     type="button"
                   >
-                    {canWatchNow ? "Watch Now" : "Enroll Now"}
+                    {canWatchNow ? (
+                      <>
+                        <FaPlay /> Watch Now
+                      </>
+                    ) : (
+                      <>
+                        <HiMiniAcademicCap /> Enroll Now
+                      </>
+                    )}
                   </button>
                 )
               ) : null}
@@ -346,6 +419,12 @@ const ViewCourses = () => {
             </span>
           </div>
 
+          {!hasReviewEligibleVideo && (
+            <p className="vcReviewEmpty">
+              Reviews are disabled for this course until at least one lecture video is available.
+            </p>
+          )}
+
           <div className="vcReviewForm">
             <div className="vcRatingRow">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -373,7 +452,7 @@ const ViewCourses = () => {
               className="vcPrimaryBtn"
               type="button"
               onClick={handleSubmitReview}
-              disabled={isSubmittingReview}
+              disabled={isSubmittingReview || !hasReviewEligibleVideo}
             >
               {isSubmittingReview ? "Submitting..." : "Submit Review"}
             </button>
@@ -396,7 +475,23 @@ const ViewCourses = () => {
                         })}
                       </p>
                     </div>
-                    <p className="vcReviewRating">{Array.from({ length: 5 }, (_, idx) => (idx < review.rating ? "★" : "☆")).join("")}</p>
+                    <div className="vcReviewActions">
+                      <p className="vcReviewRating">
+                        {[1, 2, 3, 4, 5].map((star) => (star <= review.rating ? "\u2605" : "\u2606"))}
+                      </p>
+                      {normalizeId(review?.user) === currentUserId && (
+                        <button
+                          type="button"
+                          className="vcDeleteReviewBtn"
+                          onClick={() => handleDeleteReview(review._id)}
+                          disabled={deletingReviewId === review._id}
+                          title="Delete review"
+                          aria-label="Delete review"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <p className="vcReviewComment">{review.comment}</p>
                 </article>
@@ -413,3 +508,4 @@ const ViewCourses = () => {
 };
 
 export default ViewCourses;
+
